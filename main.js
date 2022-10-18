@@ -92,7 +92,7 @@ function draw(){
     if(score_rWrist > 0.2) {
       fill("red");
       stroke("green");
-      circle(rightWrist_x, rightwrist_y,20);
+      circle(rightWrist_x, rightWrist_y,20);
     }
 }
 
@@ -147,9 +147,11 @@ function move(){
   if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
     ball.dx = -ball.dx+0.5;
     playerscore++;
+    ball_touch_paddel.play();
   }
   else{
     pcscore++;
+    missed.play();
     reset();
     navigator.vibrate(100);
   }
@@ -162,7 +164,7 @@ if(pcscore ==4){
     stroke("white");
     textSize(25)
     text("Game Over!☹☹",width/2,height/2);
-    text("Reload The Page!",width/2,height/2+30)
+    text("Press Restart button to play again!",width/2,height/2+30)
     noLoop();
     pcscore = 0;
 }
@@ -195,4 +197,15 @@ function paddleInCanvas(){
 
 function modelLoaded() {
   console.log("Model has been loaded.");
+}
+
+function preload() {
+  ball_touch_paddle = loadSound("ball_touch_paddel.wav");
+  missed = loadSound("missed.wav");
+}
+
+function restart() {
+  pcscore = 0;
+  playerscore = 0;
+  loop();
 }
